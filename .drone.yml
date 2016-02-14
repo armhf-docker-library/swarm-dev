@@ -16,7 +16,7 @@ publish:
     username: $$DOCKER_USER
     password: $$DOCKER_PASSWORD
     email: $$DOCKER_EMAIL
-    repo: armhfbuild/swarm
+    repo: armhfbuild/swarm-dev
     tag: "$${VERSION##v}"
 
   docker_latest:
@@ -26,7 +26,7 @@ publish:
     username: $$DOCKER_USER
     password: $$DOCKER_PASSWORD
     email: $$DOCKER_EMAIL
-    repo: armhfbuild/swarm
+    repo: armhfbuild/swarm-dev
     tag: latest
     when:
       matrix:
