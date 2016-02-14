@@ -40,3 +40,11 @@ notify:
   slack:
     webhook_url: $$SLACK_WEBHOOK_URL
     channel: armhf
+
+  downstream:
+    repositories:
+      - armhf-docker-library/swarm
+    token: $$DRONE_API_TOKEN
+    when:
+      event: push
+      success: true
