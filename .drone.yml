@@ -1,0 +1,43 @@
+matrix:
+  VERSION:
+    - master
+    - v1.1.0
+
+build:
+  image: armhfbuild/buildpack-deps:jessie-scm
+  commands:
+    - git clone --single-branch --branch $$VERSION https://github.com/docker/swarm upstream
+    - sed -i 's/FROM golang/FROM armhfbuild\/golang/' upstream/Dockerfile
+
+publish:
+  docker_branch:
+    image: armhfplugins/drone-docker:docker-caching
+    context: upstream
+    file: upstream/Dockerfile
+    username: $$DOCKER_USER
+    password: $$DOCKER_PASSWORD
+    email: $$DOCKER_EMAIL
+    repo: armhfbuild/swarm
+    tag: "$${VERSION##v}"
+
+  docker_latest:
+    image: armhfplugins/drone-docker:docker-caching
+    context: upstream
+    file: upstream/Dockerfile
+    username: $$DOCKER_USER
+    password: $$DOCKER_PASSWORD
+    email: $$DOCKER_EMAIL
+    repo: armhfbuild/swarm
+    tag: latest
+    when:
+      matrix:
+        VERSION: master
+
+cache:
+  mount:
+    - /drone/docker
+
+notify:
+  slack:
+    webhook_url: $$SLACK_WEBHOOK_URL
+    channel: armhf
