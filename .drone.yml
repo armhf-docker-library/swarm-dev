@@ -1,7 +1,8 @@
 matrix:
   VERSION:
-    - master
     - v1.1.0
+    - v1.0.1
+    - v1.0.0
 
 build:
   image: armhfbuild/buildpack-deps:jessie-scm
@@ -31,7 +32,7 @@ publish:
     tag: latest
     when:
       matrix:
-        VERSION: master
+        VERSION: v1.1.0
 
 cache:
   mount:
